@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <div class="container account">
+    <div class="inner">
+      <h1>
+        <img src="/static/images/logo.png" alt="">
+        <p>Inventory Management System</p>
+      </h1>
+      <form method="POST" action="{% url 'login' %}">
+        {% csrf_token %}
+        <table>
+          <colgroup>
+            <col width="100px">
+            <col width="*">
+          </colgroup>
+          <tbody>
+            <tr>
+              <td>Username</td>
+              <td><input name="username" type="text"></td>
+            </tr>
+            <tr>
+              <td>Password</td>
+              <td><input name="password" type="password"></td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                <div class="btn-wrap">
+                  <input type="submit" class="btn btn-login" value="login">
+                  {# <input type="button" class="btn btn-signup" value="sign up" onClick="location.href='{% url 'signup' %}'"> #}
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

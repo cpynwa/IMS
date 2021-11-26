@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign UP</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <div class="container account signup">
+    <div class="inner">
+      <h1>
+        <img src="/static/images/logo.png" alt="">
+        <p>Sign Up</p>
+      </h1>
+      <form method="POST" action="{% url 'signup' %}">
+        {% csrf_token %}
+        <table>
+          <colgroup>
+            <col width="150px">
+            <col width="*">
+          </colgroup>
+          <tbody>
+            <tr>
+              <td>username</td>
+              <td><input name="username" type="text"></td>
+            </tr>
+            <tr>
+              <td>Password</td>
+              <td><input name="password" type="password"></td>
+            </tr>
+            <tr>
+              <td>Confirm Password</td>
+              <td><input name="password2" type="password"></td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                <div class="btn-wrap">
+                  <input type="submit" class="btn btn-primary" value="sign up">
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

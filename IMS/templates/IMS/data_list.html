@@ -1,0 +1,98 @@
+{% extends 'IMS/base.html' %}
+
+{% block content %}
+
+<div class="content-top">
+    <h2><a href="/IMS/list">Inventory Management System</a></h2>
+    {% if user.is_authenticated %}
+<!--         <form method="post" enctype="multipart/form-data">-->
+<!--            {#{% csrf_token %}#}-->
+<!--            <input type="file" name="myfile">-->
+<!--            <button type="submit">Upload</button>-->
+<!--         </form> -->
+    <div class="btn-wrap">
+        <a href="{% url 'data_export' %}" class="add-data">data-export</a>
+        <a href="{% url 'data_new' %}" class="add-data">Add Data</a>
+    </div>
+    {% endif %}
+</div>
+<div class="content">
+    <div class="data">
+    <table>
+        <colgroup>
+            <col width="150px">
+            <col width="*">
+            <col width="150px">
+            <col width="100px">
+            <col width="250px">
+            <col width="70px">
+            <col width="150px">
+        </colgroup>
+        <tbody>
+            <tr>
+                <th>S/N</th>
+                <th>장비명</th>
+                <th>상태</th>
+                <th>Vendor</th>
+                <th>Part</th>
+                <th>국사</th>
+                <th>상면</th>
+            </tr>
+            {% for data in datas %}
+            <tr>
+                <td><a href="{% url 'data_detail' pk=data.pk %}">{{ data.serial }}</a></td>
+                <td>{{ data.hostname }}</td>
+                <td>{{ data.status }}</td>
+                <td>{{ data.vendor }}</td>
+                <td>{{ data.part }}</td>
+                <td>{{ data.location }}</td>
+                <td>{{ data.place }}</td>
+            </tr>
+            
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+</div>
+<!-- 페이징처리 시작 -->
+<ul class="pagination justify-content-center">
+    <!-- 이전페이지 -->
+    {% if datas.has_previous %}
+    <li class="page-item">
+        <a class="page-link" href="?page={{ datas.previous_page_number }}">이전</a>
+    </li>
+    {% else %}
+    <li class="page-item disabled">
+        <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
+    </li>
+    {% endif %}
+    <!-- 페이지리스트 -->
+    {% for page_number in datas.paginator.page_range %}
+        {% if page_number == question_list.number %}
+        <li class="page-item active" aria-current="page">
+            <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+        </li>
+        {% else %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+        </li>
+        {% endif %}
+    {% endfor %}
+    <!-- 다음페이지 -->
+    {% if datas.has_next %}
+    <li class="page-item">
+        <a class="page-link" href="?page={{ datas.next_page_number }}">다음</a>
+    </li>
+    {% else %}
+    <li class="page-item disabled">
+        <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
+    </li>
+    {% endif %}
+</ul>
+<!-- 페이징처리 끝 -->
+<form class="form-inline my-2 my-lg-0" action="{% url 'data_search' %}" method="post">
+    {% csrf_token %}
+    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="q" value="{{q}}">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+</form>
+{% endblock %}

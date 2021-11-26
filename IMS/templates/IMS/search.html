@@ -1,0 +1,52 @@
+{% extends 'IMS/base.html' %}
+
+{% block content %}
+
+{% if not datas %}
+<h1>검색 결과가 없습니다</h1>
+{% else %}
+
+<div class="data">
+    <table>
+        <colgroup>
+            <col width="150px">
+            <col width="*">
+            <col width="150px">
+            <col width="100px">
+            <col width="150px">
+            <col width="70px">
+            <col width="70px">
+        </colgroup>
+        <tbody>
+            <tr>
+                <th>S/N</th>
+                <th>장비명</th>
+                <th>상태</th>
+                <th>Vendor</th>
+                <th>Part</th>
+                <th>국사</th>
+                <th>상면</th>
+            </tr>
+            {% for data in datas.all %}
+            <tr>
+                <td><a href="{% url 'data_detail' pk=data.pk %}">{{ data.serial }}</a></td>
+                <td>{{ data.hostname }}</td>
+                <td>{{ data.status }}</td>
+                <td>{{ data.vendor }}</td>
+                <td>{{ data.part }}</td>
+                <td>{{ data.location }}</td>
+                <td>{{ data.place }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+
+<form class="form-inline my-2 my-lg-0" action="{% url 'data_search' %}" method="post">
+    {% csrf_token %}
+    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="q" value="{{q}}">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+</form>
+
+{% endblock %}

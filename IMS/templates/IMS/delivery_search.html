@@ -1,0 +1,53 @@
+{% extends 'IMS/base.html' %}
+
+{% block content %}
+
+{% if not deliverys %}
+<h1>검색 결과가 없습니다</h1>
+{% else %}
+
+<div class="delivery">
+    <table>
+        <colgroup>
+            <col width="100px">
+            <col width="250px">
+            <col width="100px">
+            <col width="100px">
+            <col width="100px">
+            <col width="100px">
+            <col width="100px">
+        </colgroup>
+        <tbody>
+            <tr>
+                <th>작성자</th>
+                <th>작성날짜</th>
+                <th>RMA Num</th>
+                <th>Serial</th>
+                <th>벤더</th>
+                <th>장비명</th>
+                <th>상태</th>
+            </tr>
+            {% for delivery in deliverys.all %}
+            <tr>
+
+                <td>{{ delivery.creator }}</td>
+                <td>{{ delivery.created_date }}</td>
+                <td><a href="{% url 'delivery_detail' pk=delivery.pk %}">{{ delivery.rma_num }}</a></td>
+                <td>{{ delivery.serial }}</td>
+                <td>{{ delivery.vendor }}</td>
+                <td>{{ delivery.part }}</td>
+                <td>{{ delivery.status }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+
+<form class="form-inline my-2 my-lg-0" action="{% url 'delivery_search' %}" method="post">
+    {% csrf_token %}
+    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="q" value="{{q}}">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+</form>
+
+{% endblock %}

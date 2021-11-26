@@ -1,0 +1,12 @@
+{% extends 'IMS/base.html' %}
+
+{% block content %}
+    <h3 class="delivery-title">Data</h3>
+    <form method="POST" class="delivery-form">
+        {% csrf_token %}
+        <p class="created_date">작성시간: {% now "SHORT_DATETIME_FORMAT" %}</p>
+        <p class="creator">작성자: {{ request.user.username }}</p>
+        {{ form.as_p }}
+        <button type="submit" class="save btn btn-default">Save</button>
+    </form>
+{% endblock %}

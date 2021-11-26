@@ -1,0 +1,52 @@
+{% extends 'IMS/base.html' %}
+
+{% block content %}
+    <div class="delivery">
+        {% if delivery.created_date %}
+            <div class="date">
+                {{ delivery.created_date }}
+            </div>
+        {% endif %}
+    <table class="delivery-detail">
+        <colgroup>
+            <col width="150px">
+            <col width="*">
+        </colgroup>
+        <tbody>
+            <tr>
+                <th>작성자</th>
+                <td>{{ delivery.creator }}</td>
+            </tr>
+            <tr>
+                <th>RMA Num</th>
+                <td>{{ delivery.rma_num }}</td>
+            </tr>
+            <tr>
+                <th>S/N</th>
+                <td>{{ delivery.serial }}</td>
+            </tr>
+            <tr>
+                <th>벤더</th>
+                <td>{{ delivery.vendor }}</td>
+            </tr>
+            <tr>
+                <th>Part</th>
+                <td>{{ delivery.part }}</td>
+            </tr>
+            <tr>
+                <th>상태</th>
+                <td>{{ delivery.status }}</td>
+            </tr>
+        </tbody>
+    </table>
+    {% if user.is_authenticated %}
+    <div class="btn-wrap">
+        <a href="{% url 'delivery_edit' pk=delivery.pk %}" class="btn-edit">Edit</a>
+        <a href="{% url 'delivery_list' %}"class="btn-edit">Back</a>
+        <a href="{% url 'delivery_new' %}" class="add-data">Add Data</a>
+        {# <a href="{% url 'delivery_delete' delivery.pk %}" class="btn-delete">삭제</a> #}
+    </div>
+        {% endif %}
+</div>
+
+{% endblock %}

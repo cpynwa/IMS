@@ -1,0 +1,45 @@
+{% extends 'IMS/base.html' %}
+
+{% block content %}
+
+
+<div class="content-top">
+    <h2><a href="/IMS/main">Dashboard
+    </a></h2>
+</div>
+<div class="content">
+    <div class="data">
+        <table>
+            <colgroup>
+                <col width="*">
+                <col width="100px">
+                <col width="100px">
+                <col width="100px">
+                <col width="100px">
+            </colgroup>
+            <tbody>
+                <tr>
+                    <th>Part</th>
+                    <th>Total</th>
+                    <th>창고</th>
+                    <th>납품</th>
+                    <th>RMA</th>
+                </tr>
+                {% for part_statistics in all_statistics %}
+        
+                <tr>
+                    <td>{{ part_statistics.0 }}</td>
+                    <td>{{ part_statistics.1 }}</td>
+                    <td>{{ part_statistics.2 }}</td>
+                    <td>{{ part_statistics.3 }}</td>
+                    <td>{{ part_statistics.4 }}</td>
+                </tr>
+        
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+{% endblock %}

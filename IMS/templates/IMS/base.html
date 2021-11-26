@@ -1,0 +1,31 @@
+{% load static %}
+<html>
+    <head>
+        <title>Inventory Management System</title>
+        <link rel="stylesheet" href="/static/css/style.css">
+    </head>
+    <body>
+        <div class="wrap">
+            <div class="container">
+                <div class="page-header">
+                    <a href="/IMS/main"><img src="/static/images/logo.png" alt=""></a>
+                    <div>
+                        {% if user.is_authenticated %}
+                        <p class="username">안녕하세요! {{ user }}님</p>
+                        <a href="{% url 'logout' %}" class="logout">logout</a>
+                        <a href="{% url 'change_password' %}" class="change_password">패스워드변경</a>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="top-menu">
+                    <a href="{% url 'data_list' %}" class="IMS">IMS</a>
+                    <a href="{% url 'delivery_list' %}" class="delivery">택배</a>
+                </div>
+                <div class="inner">
+                    {% block content %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

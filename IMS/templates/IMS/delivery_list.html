@@ -1,0 +1,94 @@
+{% extends 'IMS/base.html' %}
+
+{% block content %}
+    <div class="content-top">
+        <h2><a href="/IMS/delivery/list">Delivery Management System</a></h2>
+        {% if user.is_authenticated %}
+<!--         <form method="post" enctype="multipart/form-data">-->
+<!--            {#{% csrf_token %}#}-->
+<!--            <input type="file" name="myfile">-->
+<!--            <button type="submit">Upload</button>-->
+<!--         </form> -->
+        <a href="{% url 'data_export' %}" class="data-export">data-export</a>
+        <a href="{% url 'delivery_new' %}" class="add-data">Add Data</a>
+        {% endif %}
+    </div>
+    <div class="content">
+        <div class="data">
+        <table>
+            <colgroup>
+                <col width="100px">
+                <col width="150px">
+                <col width="100px">
+                <col width="100px">
+                <col width="100px">
+                <col width="100px">
+                <col width="100px">
+            </colgroup>
+            <tbody>
+                <tr>
+                    <th>작성자</th>
+                    <th>작성날짜</th>
+                    <th>RMA Num</th>
+                    <th>Serial</th>
+                    <th>벤더</th>
+                    <th>장비명</th>
+                    <th>상태</th>
+                </tr>
+                {% for delivery in deliverys %}
+                <tr>
+                    <td>{{ delivery.creator }}</td>
+                    <td>{{ delivery.created_date }}</td>
+                    <td><a href="{% url 'delivery_detail' pk=delivery.pk %}">{{ delivery.rma_num }}</a></td>
+                    <td>{{ delivery.serial }}</td>
+                    <td>{{ delivery.vendor }}</td>
+                    <td>{{ delivery.part }}</td>
+					<td>{{ delivery.status }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    </div>
+    <!-- 페이징처리 시작 -->
+    <ul class="pagination justify-content-center">
+        <!-- 이전페이지 -->
+        {% if deliverys.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ deliverys.previous_page_number }}">이전</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
+        </li>
+        {% endif %}
+        <!-- 페이지리스트 -->
+        {% for page_number in deliverys.paginator.page_range %}
+            {% if page_number == deliverys.number %}
+            <li class="page-item active" aria-current="page">
+                <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+            </li>
+            {% else %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+            </li>
+            {% endif %}
+        {% endfor %}
+        <!-- 다음페이지 -->
+        {% if deliverys.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ deliverys.next_page_number }}">다음</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
+        </li>
+        {% endif %}
+    </ul>
+    <!-- 페이징처리 끝 -->
+    <form class="form-inline my-2 my-lg-0" action="{% url 'delivery_search' %}" method="post">
+        {% csrf_token %}
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="q" value="{{q}}">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+{% endblock %}

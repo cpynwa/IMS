@@ -1,0 +1,73 @@
+{% extends 'IMS/base.html' %}
+
+{% block content %}
+
+<div class="data">
+    {% if data.created_date %}
+    <div class="date">
+        작성일: {{ data.created_date }}
+    </div>
+    {% endif %}
+    <table class="data-detail">
+        <colgroup>
+            <col width="150px">
+            <col width="*">
+        </colgroup>
+        <tbody>
+            <tr>
+                <th>설치일</th>
+                <td>{{ data.install_date }}</td>
+            </tr>
+            <tr>
+                <th>작성자</th>
+                <td>{{ data.creator }}</td>
+            </tr>
+            <tr>
+                <th>S/N</th>
+                <td>{{ data.serial }}</td>
+            </tr>
+            <tr>
+                <th>장비명</th>
+                <td>{{ data.hostname }}</td>
+            </tr>
+            <tr>
+                <th>상태</th>
+                <td>{{ data.status }}</td>
+            </tr>
+            <tr>
+                <th>Part</th>
+                <td>{{ data.part }}</td>
+            </tr>
+            <tr>
+                <th>Vendor</th>
+                <td>{{ data.vendor }}</td>
+            </tr>
+            <tr>
+                <th>국사</th>
+                <td>{{ data.location }}</td>
+            </tr>
+            <tr>
+                <th>상면</th>
+                <td>{{ data.place }}</td>
+            </tr>
+            <tr>
+                <th>교체 Serial</th>
+                <td>{{ data.next_serial }}</td>
+            </tr>
+            <tr>
+                <th>description</th>
+                <td>{{ data.description }}</td>
+            </tr>
+        </tbody>
+    </table>
+    {% if user.is_authenticated %}
+    <div class="btn-wrap">
+        <a href="{% url 'data_edit' pk=data.pk %}" class="btn-edit">Edit</a>
+        <a href="{% url 'data_list' %}"class="btn-edit">Back</a>
+        <a href="{% url 'data_new' %}" class="add-data">Add Data</a>
+        {# <a href="{% url 'data_delete' data.pk %}" class="btn-delete">삭제</a> #}
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}
